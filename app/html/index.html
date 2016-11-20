@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Lorem Ipsum </title>
+
+        <script type="text/javascript" src="../js/vue.js"></script>
+
+        <script>
+            window.onload = function() {
+                const {ipcRenderer} = require('electron');
+                const button = document.getElementById("my_button");
+
+                var app = new Vue({
+                    el: "#app",
+                    data: {
+                        message: "Hello",
+                        items: []
+                    },
+                    methods: {
+                        handleClick: function () {
+                            ipcRenderer.send("pulldata", "Pull the data now");
+                        }
+                    }
+                });
+
+                ipcRenderer.on("datapulled", function (event, data) {
+                    
+                    app.items = data;
+
+                });
+
+            }
+        </script>
+
+    </head>
+
+    <body>
+        <div id="app">
+            {{ message }}
+
+            <button id="my_button" v-on:click="handleClick"> My Button </button>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th> Number. </th>
+                        <th> Name </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in items">
+                        <td> {{ item.dataValues.id }} </td>
+                        <td> {{ item.dataValues.name }} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

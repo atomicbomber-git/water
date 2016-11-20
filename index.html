@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Lorem Ipsum </title>
+
+        <script>
+            window.onload = function() {
+                const {ipcRenderer} = require('electron');
+                const button = document.getElementById("my_button");
+
+                button.addEventListener("click", function() {
+                    console.log("Clicked!");
+
+                    ipcRenderer.send("message", "Hello");
+                });
+            }
+        </script>
+
+    </head>
+
+    <body>
+        <button id="my_button"> My Button </button>
+    </body>
+
+    
+</html>
